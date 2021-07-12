@@ -1,5 +1,5 @@
-import LspButton from './src/button'
-LspButton.install = Vue => {
-    Vue.component(LspButton.name,LspButton)
+import AimerButton from './src/button'
+AimerButton.install = Vue => {
+    Vue.component(AimerButton.name,AimerButton)
 }
-export default LspButton
+export default AimerButton
