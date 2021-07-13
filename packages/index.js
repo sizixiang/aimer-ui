@@ -1,7 +1,13 @@
 import AimerButton from "./button"
+import AimerForm from './form'
+import AimerCol from './column'
+
+import './style/common.less'
 
 const components = [
-    AimerButton
+    AimerButton,
+    AimerForm,
+    AimerCol
 ]
 
 const install = Vue => {
