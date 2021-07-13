@@ -1,6 +1,6 @@
 <template>
   <div class="lsp-ui">
-    <aimer-button></aimer-button>
+    <aimer-button type="primary">Primary</aimer-button>
   </div>
 </template>
 
