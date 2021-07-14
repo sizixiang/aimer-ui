@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AimerDemo from '@/components/AimerFormDemo'
+import AimerDemo from '@/components/AimerDemo'
 export default {
   name: 'App',
   components: {
