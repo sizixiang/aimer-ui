@@ -1,15 +1,18 @@
 <template>
   <div>
     <AimerDemo />
+    <AimerDemo2 />
   </div>
 </template>
 
 <script>
 import AimerDemo from '@/components/AimerDemo'
+import AimerDemo2 from '@/components/AimerFormDemo'
 export default {
   name: 'App',
   components: {
-    AimerDemo
+    AimerDemo,
+    AimerDemo2
   }
 }
 </script>

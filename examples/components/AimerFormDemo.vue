@@ -1,7 +1,18 @@
 <template>
   <div class="aimer-ui">
     <aimer-form class="aaaa">
-      <aimer-col col="4">
+      <aimer-col col="24" linkLabel="a1">
+        adasda1
+      </aimer-col>
+
+      <aimer-col col="24" linkLabel="a2">
+        adasda2
+      </aimer-col>
+      <aimer-col col="24" linkLabel="a3">
+        adasda3
+      </aimer-col>
+      <aimer-col col="24">
+        adasda24
       </aimer-col>
     </aimer-form>
   </div>

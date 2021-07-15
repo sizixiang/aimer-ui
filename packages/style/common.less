@@ -1,3 +1,5 @@
+@import './index.less';
+
 body{
   margin: 0;
 }
@@ -13,11 +15,20 @@ ul{
   list-style-type: none;
 }
 
-
-each(range(12), {
-  .aimer-col-@{value} {
-    width: (100% / @value);
+.createAimerCol(@n, @i:1) when (@i =< @n) {
+  .@{aimer-prefix}-col-@{i}{
+    width: (@i * 100% / @n)
   }
-})
+  .createAimerCol(@n, (@i + 1))
+}
+
+.createAimerCol(24);
 
 
+.@{aimer-prefix}-col{
+  display: inline-block;
+  font-size: 0;
+  &-item{
+    font-size: 14px;
+  }
+}
