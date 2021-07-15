@@ -1,11 +1,13 @@
 @import '~/style/index.less';
+@import '~/style/theme/index.less';
 @btn-prefix-cls: ~'@{aimer-prefix}-btn';
 
 .button-disabled(){
     &[disabled]{
-        background-color: #f5f5f5;
-        border-color: #d9d9d9;
-        color: rgba(0,0,0,.25);
+        background-color: @disabled-bg;
+        border-color: @disabled-border-color;
+        color: @disabled-color;
+        cursor: not-allowed;
     }
 }
 
@@ -32,9 +34,20 @@
     background-color: #fff;
     border: 1px solid #d9d9d9;
     &-primary{
-        .button-disabled();
-        background: #40a9ff;
+        background-color: #40a9ff;
         border-color: #40a9ff;
         color: #fff;
     }
+    &-danger{
+        color: #fff;
+        background-color: #ff4d4f;
+        border-color: #ff4d4f;
+    }
+    &-dashed{
+        color: rgba(0,0,0,.65);
+        background-color: #fff;
+        border-color: #d9d9d9;
+        border-style: dashed
+    }
+    .button-disabled();
 }

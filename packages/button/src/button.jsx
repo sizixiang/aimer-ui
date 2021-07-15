@@ -32,7 +32,6 @@ export default {
 
         return () => {
             const { disabled } = toRefs(props)
-            console.log(attrs)
             const buttonProps = {
                 ...attrs,
                 disabled: disabled.value,
