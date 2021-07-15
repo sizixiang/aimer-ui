@@ -1,4 +1,4 @@
-import AimerCol from './column'
+import AimerCol from './src/column'
 AimerCol.install = Vue => {
     Vue.component(AimerCol.name,AimerCol)
 }

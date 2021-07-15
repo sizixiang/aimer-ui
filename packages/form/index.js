@@ -1,4 +1,4 @@
-import AimerForm from './form'
+import AimerForm from './src/form'
 AimerForm.install = Vue => {
     Vue.component(AimerForm.name,AimerForm)
 }

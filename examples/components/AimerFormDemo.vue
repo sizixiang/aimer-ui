@@ -5,10 +5,10 @@
         adasda1
       </aimer-col>
 
-      <aimer-col col="24" linkLabel="a2">
+      <aimer-col col="12">
         adasda2
       </aimer-col>
-      <aimer-col col="24" linkLabel="a3">
+      <aimer-col col="12">
         adasda3
       </aimer-col>
       <aimer-col col="24">
