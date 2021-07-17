@@ -19,7 +19,6 @@ export default {
             default: false
         }
     },
-    slots: ['icon'],
     setup(props, { slots, attrs }) {
         const classes = computed(() => {
             const { type } = toRefs(props)

@@ -1,1 +1,2 @@
-import './button/style'
+import './button/style';
+import './icon/style';

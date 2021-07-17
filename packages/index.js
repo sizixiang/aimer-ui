@@ -1,4 +1,5 @@
 import AimerButton from "./button"
+import AimerIcon from "./icon"
 import AimerForm from './form'
 import AimerCol from './column'
 
@@ -6,6 +7,7 @@ import './style/common.less'
 
 const components = [
     AimerButton,
+    AimerIcon,
     AimerForm,
     AimerCol
 ]
