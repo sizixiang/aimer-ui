@@ -49,5 +49,19 @@
         border-color: #d9d9d9;
         border-style: dashed
     }
+    &-loading{
+        position: relative;
+        &:before{
+            content: '';
+            pointer-events: none;
+            position: absolute;
+            left: -1px;
+            right: -1px;
+            top: -1px;
+            bottom: -1px;
+            background-color: hsla(0,0%,100%,.35);
+            border-radius: inherit;
+        }
+    }
     .button-disabled();
 }

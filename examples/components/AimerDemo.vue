@@ -1,8 +1,6 @@
 <template>
   <div class="lsp-ui">
-    <aimer-button type="primary">
-      <i class="icon-loading"></i>
-      <!-- <aimer-icon name="loading"></aimer-icon> -->
+    <aimer-button type="primary" :loading="loading" icon="phone">
       Primary
     </aimer-button>
   </div>
@@ -10,7 +8,17 @@
 
 <script>
 export default {
-  name: 'Lsp'
+  name: 'Lsp',
+  data(){
+    return{
+      loading: true
+    }
+  },
+  mounted(){
+    setTimeout(() => {
+      this.loading = false
+    },2000)
+  }
 }
 </script>
 

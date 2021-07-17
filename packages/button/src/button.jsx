@@ -21,16 +21,19 @@ export default {
     },
     setup(props, { slots, attrs }) {
         const classes = computed(() => {
-            const { type } = toRefs(props)
+            const { type,loading } = toRefs(props)
             const defaultAimerBtnClass = `aimer-btn`
             return {
                 [defaultAimerBtnClass]: true,
-                [`${defaultAimerBtnClass}-${type.value}`]: type.value
+                [`${defaultAimerBtnClass}-${type.value}`]: type.value,
+                [`${defaultAimerBtnClass}-loading`]: loading.value
             }
         })
 
         return () => {
             const { disabled } = toRefs(props)
+            const { loading, icon } = props
+            let iconNode = ''
             const buttonProps = {
                 ...attrs,
                 disabled: disabled.value,
@@ -39,9 +42,13 @@ export default {
                     attrs.class
                 ]
             }
+            if(loading || icon){
+                iconNode = (<i class={loading ? `icon-loading` : `icon-${icon}`}></i>)
+            }
 
             const buttonNode = (
                 <button {...buttonProps}>
+                    {iconNode}
                     {slots.default?.()}
                 </button>
             )
