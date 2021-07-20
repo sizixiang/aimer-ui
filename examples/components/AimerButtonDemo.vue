@@ -15,6 +15,9 @@
     <aimer-button type="default" disabled>
       Disabled
     </aimer-button>
+    <aimer-button type="default" @click="handleClick">
+      Click
+    </aimer-button>
   </div>
 </template>
 
@@ -26,8 +29,10 @@ export default {
       loading: true
     }
   },
-  mounted(){
-
+  methods:{
+    handleClick(e){
+      console.log(e)
+    }
   }
 }
 </script>

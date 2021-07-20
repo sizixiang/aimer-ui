@@ -19,7 +19,7 @@ export default {
             default: false
         }
     },
-    setup(props, { slots, attrs }) {
+    setup(props, { slots, attrs, emit }) {
         const classes = computed(() => {
             const { type,loading } = toRefs(props)
             const defaultAimerBtnClass = `aimer-btn`
@@ -29,6 +29,14 @@ export default {
                 [`${defaultAimerBtnClass}-loading`]: loading.value
             }
         })
+
+        const handleClick = event => {
+            if(props.loading){
+                event.preventDefault()
+                return
+            }
+            emit('click',event)
+        }
 
         return () => {
             const { disabled } = toRefs(props)
@@ -40,7 +48,8 @@ export default {
                 class: [
                     classes.value,
                     attrs.class
-                ]
+                ],
+                onClick: handleClick
             }
             if(loading || icon){
                 iconNode = (<i class={loading ? `icon-loading` : `icon-${icon}`}></i>)
