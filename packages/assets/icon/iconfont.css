@@ -8,6 +8,7 @@
 [class^="icon-"], [class*=" icon-"] {
   font-family: "iconfont" !important;
   font-size: 16px;
+  vertical-align: -0.6px;
   font-style: normal;
   display: inline-block;
   -webkit-font-smoothing: antialiased;

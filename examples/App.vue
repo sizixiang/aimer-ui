@@ -1,29 +1,35 @@
 <template>
-  <div>
-    <AimerDemo />
-    <AimerDemo2 />
+  <div class="aimer-ui">
+    <p class="title">按钮组件</p>
+    <AimerButtonDemo />
+    <p class="title">表单组件</p>
+    <AimerFormDemo />
   </div>
 </template>
 
 <script>
-import AimerDemo from '@/components/AimerDemo'
-import AimerDemo2 from '@/components/AimerFormDemo'
+import AimerButtonDemo from '@/components/AimerButtonDemo'
+import AimerFormDemo from '@/components/AimerFormDemo'
 export default {
   name: 'App',
   components: {
-    AimerDemo,
-    AimerDemo2
+    AimerButtonDemo,
+    AimerFormDemo
   }
 }
 </script>
 
-<style>
+<style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: left;
   color: #2c3e50;
-  margin-top: 60px;
+  padding: 0 24px;
+  .title{
+    font-size: 18px;
+    font-weight: 600;
+  }
 }
 </style>

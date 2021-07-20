@@ -1,7 +1,19 @@
 <template>
   <div class="lsp-ui">
-    <aimer-button type="primary" :loading="loading" icon="phone">
+    <aimer-button type="default" loading>
+      Default
+    </aimer-button>
+    <aimer-button type="primary" icon="phone">
       Primary
+    </aimer-button>
+    <aimer-button type="danger" icon="upload">
+      Danger
+    </aimer-button>
+    <aimer-button type="dashed" icon="stop">
+      Dashed
+    </aimer-button>
+    <aimer-button type="default" disabled>
+      Disabled
     </aimer-button>
   </div>
 </template>
@@ -15,9 +27,7 @@ export default {
     }
   },
   mounted(){
-    setTimeout(() => {
-      this.loading = false
-    },2000)
+
   }
 }
 </script>
