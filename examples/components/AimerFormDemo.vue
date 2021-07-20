@@ -1,7 +1,7 @@
 <template>
   <div class="aimer-ui">
     <aimer-form class="aaaa">
-      <aimer-col col="24" linkLabel="a1">
+      <!-- <aimer-col col="24" linkLabel="a1">
         adasda1
       </aimer-col>
 
@@ -13,7 +13,7 @@
       </aimer-col>
       <aimer-col col="24">
         adasda24
-      </aimer-col>
+      </aimer-col> -->
     </aimer-form>
   </div>
 </template>

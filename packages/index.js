@@ -2,6 +2,8 @@ import AimerButton from "./button"
 import AimerIcon from "./icon"
 import AimerForm from './form'
 import AimerCol from './column'
+import AimerFormItem from './formItem'
+import AimerInput from './input'
 
 import './style/common.less'
 
@@ -9,7 +11,9 @@ const components = [
     AimerButton,
     AimerIcon,
     AimerForm,
-    AimerCol
+    AimerFormItem,
+    AimerCol,
+    AimerInput
 ]
 
 const install = Vue => {
