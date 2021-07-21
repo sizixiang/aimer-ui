@@ -20,6 +20,7 @@ export default {
         }
     },
     emits: {
+      // To prevent vue @click event conflict
       click: null
     },
     setup(props, { slots, attrs, emit }) {
@@ -34,7 +35,6 @@ export default {
         })
 
         const handleClick = event => {
-          // event.stop
           if(props.loading){
             event.preventDefault()
             return
