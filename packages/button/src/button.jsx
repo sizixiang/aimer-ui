@@ -19,6 +19,9 @@ export default {
             default: false
         }
     },
+    emits: {
+      click: null
+    },
     setup(props, { slots, attrs, emit }) {
         const classes = computed(() => {
             const { type,loading } = toRefs(props)
@@ -31,11 +34,12 @@ export default {
         })
 
         const handleClick = event => {
-            if(props.loading){
-                event.preventDefault()
-                return
-            }
-            emit('click',event)
+          // event.stop
+          if(props.loading){
+            event.preventDefault()
+            return
+          }
+          emit('click', event)
         }
 
         return () => {

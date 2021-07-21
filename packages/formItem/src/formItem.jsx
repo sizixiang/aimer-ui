@@ -1,4 +1,4 @@
-import { toRefs } from 'vue'
+import { toRefs, computed, ref } from 'vue'
 
 export default {
   name: 'AimerFormItem',
@@ -8,23 +8,34 @@ export default {
     prop: String,
     labelWidth: [Number, String]
   },
-  render(self) {
-    const { labelWidth } = toRefs(self)
-    let style = {}
-    if (labelWidth.value) {
-      style = { width: labelWidth.value }
-    }
+  setup(props, { slots }) {
+    const attribute = computed(() => {
+      const { labelWidth, label } = toRefs(props)
+      const style = ref({})
+      if (labelWidth.value) {
+        style.value = { width: labelWidth.value }
+      }
+      return {
+        style: style.value,
+        label: label.value,
+        slots: slots.value
+      }
+    })
+    return { ...attribute.value }
+  },
+  render() {
     return (
       <div class="aimer-form-item">
-        <label style={style} class="aimer-form-item-label">
-          {self.label}
+        <label style={this.style} class="aimer-form-item-label">
+          {this.label}
         </label>
         {
-          self.$slots.default
-          ? self.$slots.default()
-          : self.$slots
+          this.$slots.default
+          ? this.$slots.default()
+          : this.$slots
         }
       </div>
     )
   }
+
 }

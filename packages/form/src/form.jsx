@@ -1,6 +1,6 @@
 
-import { toRefs } from 'vue'
-import { isSymbol } from '../../utils/lib'
+import { toRefs, computed } from 'vue'
+import { isSymbol, generatingRandom } from '../../utils/lib'
 
 export default {
   name: 'AimerForm',
@@ -38,25 +38,37 @@ export default {
       aimerForm: this
     }
   },
-  render(self) {
-    const { class: className, id, data } = toRefs(self)
-    // Set default value, To prevent error
-    let template = null
-    // Detection slots is empty
-    // If slots is empty, Use array As a template
-    // If slots and data is all Not empty, Will take slots and data common use as a template
-    if ((self.$slots && self.$slots.default) && data.value.length) {
-      template = bothTemplate(self.$slots.default(), data.value)
-    } else if(self.$slots.default) {
-      // createSlotsTemplate(self.$slots.default())
-      template = self.$slots.default()
-    } else if (data.value.length) {
-      console.log(2)
-      console.log(data.value)
+  setup(prop, { slots }) {
+    // const { data } =
+    const attribute = computed(() => {
+      const { class: className, id } = toRefs(prop)
+      // let template = null
+      return { id: id.value, className: className.value }
+    })
+    const template = computed(() => {
+      const { data } = toRefs(prop)
+      let template = null
+      // Detection slots is empty
+      // If slots is empty, Use array As a template
+      // If slots and data is all Not empty, Will take slots and data common use as a template
+      if ((slots && slots.default) && data.value.length) {
+        template = bothTemplate(slots.default(), data.value)
+      } else if(slots.default) {
+        template = slots.default()
+      } else if (data.value.length) {
+        //  1111
+      }
+      return template
+    })
+    return {
+      template: template.value,
+      ...attribute.value
     }
+  },
+  render() {
     return (
-      <div key={`${id.value}From`} class={`aimer-form ${className.value}`}>
-        {template}
+      <div key={`${this.id}From`} class={`aimer-form ${this.className}`}>
+        {this.template}
       </div>
     )
   }
@@ -83,28 +95,26 @@ const bothTemplate = (vNode, data) => {
       }
     }
   }
-  let KEY = 0
+
   for (let i = 0;i < dataLen ; i++) {
     const { label, col, ...props } = data[i]
     if (hashMap[label]) {
-      template.push( createElement({ label, KEY, col, ...props }) )
-      KEY += 1
+      template.push( createElement({ label, key: generatingRandom()[0], col, ...props, }) )
       // Prevent too many props to be set
       delete hashMap[label].props.linkLabel
-      hashMap[label].key = `form-item-${KEY}`
+      hashMap[label].key = `form-item-${generatingRandom()[0]}`
       template.push(hashMap[label])
     } else {
-      template.push( createElement({ label, KEY, col, ...props}) )
+      template.push( createElement({ label, key: generatingRandom()[0], col, ...props}) )
     }
-    KEY += 1
   }
   template = [...template, ...disorderly]
   return ( template )
 }
 
-const createElement = ({col, KEY, label, ...props}) => {
+const createElement = ({col, key, label, ...props}) => {
   return (
-    <aimer-col col={col || '24'} key={`form-item-${KEY}`}>
+    <aimer-col col={col || '24'} key={`form-item-${key}`}>
       <aimer-form-item {...props} label={label}>
         { createInput(props.type || 'text')(props) }
       </aimer-form-item>

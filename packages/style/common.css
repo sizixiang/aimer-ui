@@ -80,7 +80,7 @@ body {
 .aimer-col-item {
   font-size: 14px;
 }
-.clear:after {
+.clearfix:after {
   content: '';
   display: table;
   clear: both;

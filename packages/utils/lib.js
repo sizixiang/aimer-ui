@@ -101,6 +101,16 @@
     }
     return flag
   }
+
+/**
+ * 生成随机安全数
+ * @param { Number } len 生成随机数个数
+ */
+export const generatingRandom = (len = 1) => {
+  const hash = new Uint32Array(len);
+  window.crypto.getRandomValues(hash);
+  return hash
+}
 /**
  * 返回判断
 */

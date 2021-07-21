@@ -1,6 +1,6 @@
 <template>
   <div class="aimer-ui">
-    <aimer-form class="aaaa">
+    <aimer-form class="aaaa" key="ass">
       <!-- <aimer-col col="24" linkLabel="a1">
         adasda1
       </aimer-col>
