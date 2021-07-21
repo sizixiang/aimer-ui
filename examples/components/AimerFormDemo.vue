@@ -1,11 +1,13 @@
 <template>
   <div class="aimer-ui">
-    <aimer-form class="aaaa" key="ass">
-      <!-- <aimer-col col="24" linkLabel="a1">
-        adasda1
+    <aimer-form class="aaaa">
+      <aimer-col col="24" linkLabel="a1" >
+        <aimer-form-item label="1111" type="text" >
+          <aimer-input prefixIcon="eye"/>
+        </aimer-form-item>
       </aimer-col>
 
-      <aimer-col col="12">
+      <!-- <aimer-col col="12">
         adasda2
       </aimer-col>
       <aimer-col col="12">

@@ -1,4 +1,4 @@
-import { ref, computed, toRefs } from 'vue'
+import { computed, toRefs, ref, watchEffect } from 'vue'
 export default {
   name: 'AimerInput',
   props: {
@@ -11,7 +11,7 @@ export default {
       type: Boolean,
       default: false
     },
-    readyOnly: {
+    readonly: {
       type: Boolean,
       default: false
     },
@@ -38,7 +38,7 @@ export default {
     rows: String,
     resize: {
       type: String,
-      default: 'inherit' // Optional attribute: none / both / horizontal / vertical, default
+      default: 'inherit' // Optional attribute: none / both / horizontal / vertical, default value is inherit
     },
     showWordLimit: {
       type: Boolean,
@@ -52,58 +52,72 @@ export default {
     prefixIcon: String,
     suffixIcon: String
   },
-  setup(self) {
-    const visiblePassword = ref(false)
-    const attribute = computed(() => {
-      let classNameInput = ''
-      let [prefix, suffix] = ['', '']
-      const { type: inputType, showPassword, rows, resize, showWordLimit,  maxLength, prefixIcon, suffixIcon} = toRefs(self)
-      // size
-      let type = ref(inputType.value)
-      let attributeConfig = {}
-      let attributeDiv = {}
-      if (type.value === 'password') {
-        if (showPassword) {
-          classNameInput = 'is-show-password'
-          suffix = <aimer-icon name="eye"/>
-          type.value = !visiblePassword.value ? 'password' : 'text'
-        }
-      } else if (type.value === 'textarea') {
-        attributeConfig = {
-          rows: rows.value,
-          resize: resize.value,
-        }
-        if (showWordLimit) {
-          attributeDiv = {limit: `0/${maxLength || 0}`}
-        }
-      } else {
-        // 11111
+  setup(prop) {
+    const showPasswordFlag = ref(false)
+    const prefix = ref('')
+    const suffix = ref('')
+    const attributeInput = computed(() => {
+      const { type, value, maxLength, minLength, readonly, disabled } = toRefs(prop)
+      // prefixIcon, suffixIcon, size
+      let className = ''
+      let attributeObj = {}
+      if (disabled.value) {
+        className += ' aimer-input_disabled'
+        attributeObj.disabled = disabled.value
+      } else if (readonly.value) {
+        className += ' aimer-input_readonly'
+        attributeObj.readonly = readonly.value
       }
-      if (prefixIcon.value) { prefix = <aimer-icon name={prefixIcon.value}/> }
-      if (suffixIcon.value) { suffix = <aimer-icon name={suffixIcon.value}/> }
       return {
-        attributeInput: { type: type.value, ...attributeConfig },
-        attributeDiv: {...attributeDiv},
-        classNameInput,
-        suffix,
-        prefix
+        type: type.value,
+        value: value.value,
+        maxLength: maxLength.value,
+        minLength: minLength.value,
+        class: className,
+        ...attributeObj
       }
     })
-    const attr = attribute.value
-    return() => {
-      return (
-        <div
-          class="aimer-form-item-input"
-         {...attr.attributeDiv}
-        >
-          { attr.prefix }
-           <input
-            {...attr.attributeInput}
-            class={`aimer-input-inner ${attr.classNameInput}`}
-           />
-           { attr.suffix }
-         </div>
-      )
+
+    watchEffect(() => {
+      const { type, showPassword, suffixIcon, prefixIcon } = toRefs(prop)
+      if (type.value === 'password' && showPassword.value) {
+        showPasswordFlag.value = false
+        suffix.value = 'eye'
+      } else if (suffixIcon.value || prefixIcon.value) {
+        prefix.value = prefixIcon.value
+        suffix.value = suffixIcon.value
+      }
+    })
+
+    const handlerIcon = () => {
+      showPasswordFlag.value = !showPasswordFlag.value
+      suffix.value = showPasswordFlag.value ? 'eye-close' : 'eye'
     }
+
+    return() => (
+      <div class="aimer-input">
+        {
+          prefix.value
+          ? <span class="aimer-input-icon aimer-input-icon_prefix"><aimer-icon name={prefix.value}/></span>
+          : ''
+        }
+        <input
+          class={`aimer-input_inner`}
+          {...attributeInput.value}
+        />
+        {
+          suffix.value
+          ? <span
+              class={`aimer-input-icon aimer-input-icon_suffix`}
+            >
+              <aimer-icon
+                name={suffix.value}
+                onclick={attributeInput.value.type === 'password' && handlerIcon}
+              />
+           </span>
+          : ''
+        }
+      </div>
+    )
   }
 }

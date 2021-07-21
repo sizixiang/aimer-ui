@@ -20,15 +20,20 @@ export default {
         {
           type: 'text',
           prop: 'a1',
-          label: 'a1'
+          label: 'a1',
+          readonly: true
         },
         {
+          type: 'password',
           prop: 's2',
-          label: 'a2'
+          label: 'a2',
+          showPassword: true
         },
         {
           prop: 's3',
-          label: 'a3'
+          label: 'a3',
+          disabled: true,
+          prefixIcon: 'login'
         }
       ]
     }
@@ -125,7 +130,10 @@ const createElement = ({col, key, label, ...props}) => {
 const createInput = (type) => {
   const inputType = {
     text: function(props) {
-      return (<aimer-input type={props.type || 'text'}/>)
+      return (<aimer-input type={props.type || 'text'} {...props}/>)
+    },
+    password: function(props) {
+      return (<aimer-input type={props.type} {...props}/>)
     },
     dellProps: function(props) {
       return inputType[type](props)

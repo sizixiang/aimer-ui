@@ -1,29 +1,37 @@
-import { toRefs } from 'vue'
+import { toRefs, computed } from 'vue'
 
 export default {
   name: 'AimerCol',
   props: ['col'],
-  render(self) {
-    const { col } = toRefs(this)
-    // judge col argument is Number<string>`
-    const flag = Boolean((+col.value))
-    if (!flag) {
-      throw new Error('! The col argument takes a string number or a number ')
-    }
-    let template = null
-    if (flag) {
-      template = (
-        <div class={`aimer-col aimer-col-${col.value}`}>
-          <div class={`aimer-col-item`}>
-            {
-              self.$slots.default
-              ? self.$slots.default()
-              : self.$slots
-            }
-          </div>
+  setup(props, { slots }) {
+    const attribute = computed(() => {
+      const { col } = toRefs(props)
+      // judge col argument is Number<string>`
+      const flag = Boolean((+col.value))
+      if (!flag) {
+        throw new Error('! The col argument takes a string number or a number ')
+      }
+      return {
+        col,
+        flag,
+        slots
+      }
+    })
+    return {...attribute.value}
+  },
+  render() {
+    return (
+      this.flag
+      ? <div class={`aimer-col aimer-col-${this.col}`}>
+        <div class="aimer-col-item">
+          {
+            this.slots.default
+            ? this.slots.default()
+            : this.slots
+          }
         </div>
-      )
-    }
-    return template
+      </div>
+      : null
+    )
   }
 }
