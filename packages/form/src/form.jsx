@@ -1,5 +1,5 @@
 
-import { toRefs, computed } from 'vue'
+import { toRefs, computed, provide} from 'vue'
 import { isSymbol, generatingRandom } from '../../utils/lib'
 
 export default {
@@ -14,6 +14,7 @@ export default {
       type: String,
       default: ''
     },
+    labelWidth: [String, Number],
     data: {
       type: Array,
       default: () => [
@@ -21,41 +22,44 @@ export default {
           type: 'text',
           prop: 'a1',
           label: 'a1',
-          readonly: true
+          readonly: true,
+          size: 'mini'
         },
         {
           type: 'password',
           prop: 's2',
           label: 'a2',
-          showPassword: true
+          showPassword: true,
+          size: 'medium'
         },
         {
           prop: 's3',
           label: 'a3',
           disabled: true,
-          prefixIcon: 'login'
+          prefixIcon: 'login',
+          size: 'giant'
+        },
+        {
+          prop: 's4',
+          label: 'a4',
+          disabled: true,
+          prefixIcon: 'login',
+          size: 'small'
         }
       ]
     }
   },
-  provide() {
-    return {
-      aimerForm: this
-    }
-  },
   setup(prop, { slots }) {
-    // const { data } =
     const attribute = computed(() => {
-      const { class: className, id } = toRefs(prop)
-      // let template = null
-      return { id: id.value, className: className.value }
+      const { class: className, id, labelWidth } = toRefs(prop)
+      return { id: id.value, className: className.value, labelWidth: labelWidth.value || '' }
     })
     const template = computed(() => {
       const { data } = toRefs(prop)
       let template = null
       // Detection slots is empty
       // If slots is empty, Use array As a template
-      // If slots and data is all Not empty, Will take slots and data common use as a template
+      // If slots and data is all not empty, Will take slots and data common use as a template
       if ((slots && slots.default) && data.value.length) {
         template = bothTemplate(slots.default(), data.value)
       } else if(slots.default) {
@@ -65,6 +69,7 @@ export default {
       }
       return template
     })
+    provide('aimerFormAttr', attribute.value)
     return {
       template: template.value,
       ...attribute.value

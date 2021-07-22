@@ -1,39 +1,49 @@
-import { toRefs, computed, ref } from 'vue'
-
+import { toRefs, computed, ref, inject, provide } from 'vue'
+// import { indexOf } from '../../utils/lib'
 export default {
   name: 'AimerFormItem',
-  inject: ['aimerForm'],
+  provide: {
+    'aimerFormItem': this
+  },
   props: {
     label: String,
     prop: String,
     labelWidth: [Number, String]
   },
   setup(props, { slots }) {
+    const aimerForm = inject('aimerFormAttr')
     const attribute = computed(() => {
       const { labelWidth, label } = toRefs(props)
+      const w = aimerForm.labelWidth
       const style = ref({})
-      if (labelWidth.value) {
-        style.value = { width: labelWidth.value }
+      const controlStyle = ref({})
+      if (labelWidth.value || w) {
+        let width = (labelWidth.value || w).replace(/px/g, '')
+        style.value = { width: width + 'px' }
+        controlStyle.value = { marginLeft: width + 'px' }
       }
       return {
         style: style.value,
         label: label.value,
-        slots: slots.value
+        controlStyle: controlStyle.value
       }
     })
-    return { ...attribute.value }
+    provide('aimerFormItemAttr', {...attribute.value })
+    return { ...attribute.value, slots: slots.value }
   },
   render() {
     return (
-      <div class="aimer-form-item">
+      <div class="aimer-form-item clearfix">
         <label style={this.style} class="aimer-form-item-label">
           {this.label}
         </label>
-        {
-          this.$slots.default
-          ? this.$slots.default()
-          : this.$slots
-        }
+        <div class="aimer-form-item_control" style={this.controlStyle}>
+          {
+            this.$slots.default
+            ? this.$slots.default()
+            : this.$slots
+          }
+        </div>
       </div>
     )
   }

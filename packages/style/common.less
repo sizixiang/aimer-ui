@@ -1,5 +1,5 @@
 @import './index.less';
-
+@import './theme/default.less';
 body{
   margin: 0;
 }
@@ -30,4 +30,14 @@ body{
 
 label{
   display: block;
+}
+
+.is-disabled{
+  background: @disabled-bg;
+  color: @disabled-color;
+  border-color: @disabled-border-color;
+}
+
+input[disabled]{
+  cursor: not-allowed;
 }

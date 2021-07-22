@@ -115,3 +115,6 @@ export const generatingRandom = (len = 1) => {
  * 返回判断
 */
 const judgeType = (single) => toString.call(single).slice(8, -1)
+
+
+export const indexOf = (str, targetValue) => ~str.indexOf(targetValue)

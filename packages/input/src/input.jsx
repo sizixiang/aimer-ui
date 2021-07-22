@@ -1,4 +1,5 @@
 import { computed, toRefs, ref, watchEffect } from 'vue'
+// import { indexOf } from '../../utils/lib'
 export default {
   name: 'AimerInput',
   props: {
@@ -47,7 +48,7 @@ export default {
     // If the input field type is not equal to the textarea, It will not take effect
     size: {
       type: String,
-      default: 'normal'  // Optional attribute: giant / big / normal / small / mini
+      default: 'large'  // Optional attribute: giant / large / medium / small / mini
     },
     prefixIcon: String,
     suffixIcon: String
@@ -59,24 +60,39 @@ export default {
     const attributeInput = computed(() => {
       const { type, value, maxLength, minLength, readonly, disabled } = toRefs(prop)
       // prefixIcon, suffixIcon, size
-      let className = ''
-      let attributeObj = {}
+      const attributeObj = ref({})
       if (disabled.value) {
-        className += ' aimer-input_disabled'
-        attributeObj.disabled = disabled.value
+        attributeObj.value.disabled = disabled.value
       } else if (readonly.value) {
-        className += ' aimer-input_readonly'
-        attributeObj.readonly = readonly.value
+        attributeObj.value.readonly = readonly.value
       }
       return {
         type: type.value,
         value: value.value,
         maxLength: maxLength.value,
         minLength: minLength.value,
-        class: className,
-        ...attributeObj
+        ...attributeObj.value
       }
     })
+
+    const attributeDiv = computed(() => {
+      const { type, readonly, disabled, size } = toRefs(prop)
+      const className = ref([])
+      console.log(size.value, 'size.value')
+      if (type.value !== 'textarea' && size.value !== 'large') {
+        className.value.push(`aimer-input-${size.value}`)
+      }
+      if (disabled.value) {
+        className.value.push('is-disabled')
+      } else if (readonly.value) {
+        className.value.push('is-readonly')
+      }
+      return {
+        class: className.value
+      }
+    })
+    console.log('attributeDiv: ', attributeDiv.value);
+
 
     watchEffect(() => {
       const { type, showPassword, suffixIcon, prefixIcon } = toRefs(prop)
@@ -93,9 +109,11 @@ export default {
       showPasswordFlag.value = !showPasswordFlag.value
       suffix.value = showPasswordFlag.value ? 'eye-close' : 'eye'
     }
-
     return() => (
-      <div class="aimer-input">
+      <div
+        class={`aimer-input`}
+        {...attributeDiv.value}
+      >
         {
           prefix.value
           ? <span class="aimer-input-icon aimer-input-icon_prefix"><aimer-icon name={prefix.value}/></span>
@@ -104,6 +122,7 @@ export default {
         <input
           class={`aimer-input_inner`}
           {...attributeInput.value}
+          class={''}
         />
         {
           suffix.value
