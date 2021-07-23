@@ -71,14 +71,14 @@ export default {
         value: value.value,
         maxLength: maxLength.value,
         minLength: minLength.value,
-        ...attributeObj.value
+        ...attributeObj.value,
+        onkeyup: (e) => handlerChange(e)
       }
     })
 
     const attributeDiv = computed(() => {
       const { type, readonly, disabled, size } = toRefs(prop)
       const className = ref([])
-      console.log(size.value, 'size.value')
       if (type.value !== 'textarea' && size.value !== 'large') {
         className.value.push(`aimer-input-${size.value}`)
       }
@@ -91,9 +91,9 @@ export default {
         class: className.value
       }
     })
-    console.log('attributeDiv: ', attributeDiv.value);
-
-
+    const handlerChange = (event) => {
+      attributeInput.value.value = event.target.value
+    }
     watchEffect(() => {
       const { type, showPassword, suffixIcon, prefixIcon } = toRefs(prop)
       if (type.value === 'password' && showPassword.value) {
@@ -106,9 +106,12 @@ export default {
     })
 
     const handlerIcon = () => {
-      showPasswordFlag.value = !showPasswordFlag.value
+      const booleanVal = showPasswordFlag.value
+      attributeInput.value.type = !booleanVal ? 'text' : 'password'
+      showPasswordFlag.value = !booleanVal
       suffix.value = showPasswordFlag.value ? 'eye-close' : 'eye'
     }
+
     return() => (
       <div
         class={`aimer-input`}
@@ -131,12 +134,13 @@ export default {
             >
               <aimer-icon
                 name={suffix.value}
-                onclick={attributeInput.value.type === 'password' && handlerIcon}
+                onclick={prop.showPassword && handlerIcon}
               />
-           </span>
+            </span>
           : ''
         }
       </div>
     )
   }
 }
+
