@@ -51,9 +51,12 @@ export default {
       default: 'large'  // Optional attribute: giant / large / medium / small / mini
     },
     prefixIcon: String,
-    suffixIcon: String
+    suffixIcon: String,
+    modelValue: String
   },
-  setup(prop) {
+  setup(prop, ctx) {
+    console.log('attr: ', ctx);
+    console.log(prop, ':::prop')
     const showPasswordFlag = ref(false)
     const prefix = ref('')
     const suffix = ref('')
@@ -66,6 +69,7 @@ export default {
       } else if (readonly.value) {
         attributeObj.value.readonly = readonly.value
       }
+
       return {
         type: type.value,
         value: value.value,
@@ -91,9 +95,11 @@ export default {
         class: className.value
       }
     })
+
     const handlerChange = (event) => {
       attributeInput.value.value = event.target.value
     }
+
     watchEffect(() => {
       const { type, showPassword, suffixIcon, prefixIcon } = toRefs(prop)
       if (type.value === 'password' && showPassword.value) {
@@ -107,9 +113,9 @@ export default {
 
     const handlerIcon = () => {
       const booleanVal = showPasswordFlag.value
-      attributeInput.value.type = !booleanVal ? 'text' : 'password'
+      attributeInput.value.type = booleanVal ? 'password' : 'text'
+      suffix.value = booleanVal ? 'eye' : 'eye-close'
       showPasswordFlag.value = !booleanVal
-      suffix.value = showPasswordFlag.value ? 'eye-close' : 'eye'
     }
 
     return() => (
