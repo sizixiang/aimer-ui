@@ -51,9 +51,12 @@ export default {
       default: 'large'  // Optional attribute: giant / large / medium / small / mini
     },
     prefixIcon: String,
-    suffixIcon: String
+    suffixIcon: String,
+    modelValue: String
   },
-  setup(prop) {
+  setup(prop, ctx) {
+    console.log('attr: ', ctx);
+    console.log(prop, ':::prop')
     const showPasswordFlag = ref(false)
     const prefix = ref('')
     const suffix = ref('')
@@ -66,19 +69,20 @@ export default {
       } else if (readonly.value) {
         attributeObj.value.readonly = readonly.value
       }
+
       return {
         type: type.value,
         value: value.value,
         maxLength: maxLength.value,
         minLength: minLength.value,
-        ...attributeObj.value
+        ...attributeObj.value,
+        onkeyup: (e) => handlerChange(e)
       }
     })
 
     const attributeDiv = computed(() => {
       const { type, readonly, disabled, size } = toRefs(prop)
       const className = ref([])
-      console.log(size.value, 'size.value')
       if (type.value !== 'textarea' && size.value !== 'large') {
         className.value.push(`aimer-input-${size.value}`)
       }
@@ -91,8 +95,10 @@ export default {
         class: className.value
       }
     })
-    console.log('attributeDiv: ', attributeDiv.value);
 
+    const handlerChange = (event) => {
+      attributeInput.value.value = event.target.value
+    }
 
     watchEffect(() => {
       const { type, showPassword, suffixIcon, prefixIcon } = toRefs(prop)
@@ -106,9 +112,12 @@ export default {
     })
 
     const handlerIcon = () => {
-      showPasswordFlag.value = !showPasswordFlag.value
-      suffix.value = showPasswordFlag.value ? 'eye-close' : 'eye'
+      const booleanVal = showPasswordFlag.value
+      attributeInput.value.type = booleanVal ? 'password' : 'text'
+      suffix.value = booleanVal ? 'eye' : 'eye-close'
+      showPasswordFlag.value = !booleanVal
     }
+
     return() => (
       <div
         class={`aimer-input`}
@@ -131,12 +140,13 @@ export default {
             >
               <aimer-icon
                 name={suffix.value}
-                onclick={attributeInput.value.type === 'password' && handlerIcon}
+                onclick={prop.showPassword && handlerIcon}
               />
-           </span>
+            </span>
           : ''
         }
       </div>
     )
   }
 }
+

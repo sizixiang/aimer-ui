@@ -1,5 +1,5 @@
 
-import { toRefs, computed, provide} from 'vue'
+import { toRefs, computed, provide, ref } from 'vue'
 import { isSymbol, generatingRandom } from '../../utils/lib'
 
 export default {
@@ -46,20 +46,32 @@ export default {
           prefixIcon: 'login',
           size: 'small'
         }
-      ]
+      ],
+    },
+    model: {
+      type: Object,
+      default:() => ({})
     }
   },
-  setup(prop, { slots }) {
+  setup(prop, { slots, emit }) {
+    console.log('emit: ', emit);
+    const id = ref(prop.id)
+    const className = ref(prop.className)
     const attribute = computed(() => {
-      const { class: className, id, labelWidth } = toRefs(prop)
-      return { id: id.value, className: className.value, labelWidth: labelWidth.value || '' }
+      const { labelWidth } = toRefs(prop)
+      return { labelWidth: labelWidth.value || '' }
     })
+
     const template = computed(() => {
       const { data } = toRefs(prop)
       let template = null
       // Detection slots is empty
       // If slots is empty, Use array As a template
       // If slots and data is all not empty, Will take slots and data common use as a template
+
+      // 检测插槽是否为空
+      // 如果插槽为空，则使用array作为模板
+      // 如果插槽和data都不为空，将以插槽和data为常用模板
       if ((slots && slots.default) && data.value.length) {
         template = bothTemplate(slots.default(), data.value)
       } else if(slots.default) {
@@ -70,15 +82,9 @@ export default {
       return template
     })
     provide('aimerFormAttr', attribute.value)
-    return {
-      template: template.value,
-      ...attribute.value
-    }
-  },
-  render() {
-    return (
-      <div key={`${this.id}From`} class={`aimer-form ${this.className}`}>
-        {this.template}
+    return() => (
+      <div key={`${id.value}From`} class={`aimer-form ${className.value}`}>
+        {template.value}
       </div>
     )
   }

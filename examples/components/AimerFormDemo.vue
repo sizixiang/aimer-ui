@@ -3,10 +3,12 @@
     <aimer-form class="aaaa" label-width="90">
       <aimer-col col="24" linkLabel="a1" >
         <aimer-form-item label="11411" type="text" label-width="50px">
-          <aimer-input prefixIcon="eye" value="123123"/>
+          <aimer-input prefixIcon="eye" v-model="model.a"/>
         </aimer-form-item>
-        <aimer-form-item label="1111" type="text" label-width="120">
-          <aimer-input value="123123444"/>
+      </aimer-col>
+      <aimer-col col="24">
+        <aimer-form-item label="111dsfasdf1" type="text" label-width="120">
+          <aimer-input v-model="model.b"/>
         </aimer-form-item>
       </aimer-col>
     </aimer-form>
@@ -15,7 +17,15 @@
 
 <script>
 export default {
-  name: 'AimerFormDemo'
+  name: 'AimerFormDemo',
+  data:() => (
+    {
+      model: {
+        a: 1,
+        b: 'asdfasdfsdfsdf'
+      }
+    }
+  )
 }
 </script>
 
