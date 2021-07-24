@@ -22,6 +22,8 @@ export default{
         const selectNode = (
             <div {...selectProps}></div>
         )
-        return selectNode
+        return () => {
+            return selectNode
+        }
     }
 }
