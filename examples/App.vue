@@ -2,6 +2,8 @@
   <div class="aimer-ui">
     <p class="title">按钮组件</p>
     <AimerButtonDemo />
+    <p class="title">选择组件</p>
+    <AimerSelectDemo />
     <p class="title">表单组件</p>
     <AimerFormDemo />
   </div>
@@ -9,11 +11,13 @@
 
 <script>
 import AimerButtonDemo from '@/components/AimerButtonDemo'
+import AimerSelectDemo from '@/components/AimerSelectDemo'
 import AimerFormDemo from '@/components/AimerFormDemo'
 export default {
   name: 'App',
   components: {
     AimerButtonDemo,
+    AimerSelectDemo,
     AimerFormDemo
   }
 }
