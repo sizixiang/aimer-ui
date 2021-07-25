@@ -12,7 +12,7 @@ export default{
         const defaultAimerBtnClass = `${prefixLowerCase}-select`
         const classes = computed(() => {
             return{
-                [defaultAimerBtnClass]: true,
+                [defaultAimerBtnClass]: true
             }
         })
         const selectProps = {
@@ -20,13 +20,24 @@ export default{
                 classes.value
             ]
         }
+        const iconNode = () => {
+            const iconProps = {
+                class: [
+                    `icon-down`
+                ]
+            }
+            return (
+                <i {...iconProps}></i>
+            )
+        }
+        console.log(selectProps)
         const selectNode = (
             <div {...selectProps}>
                 <div class={`${defaultAimerBtnClass}-value`}>
                     <span></span>
                 </div>
                 <div class={`${defaultAimerBtnClass}-icon`}>
-                    
+                    {iconNode()}
                 </div>
             </div>
         )
