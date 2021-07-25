@@ -25,6 +25,9 @@ export default{
                 <div class={`${defaultAimerBtnClass}-value`}>
                     <span></span>
                 </div>
+                <div class={`${defaultAimerBtnClass}-icon`}>
+                    
+                </div>
             </div>
         )
         return () => {
