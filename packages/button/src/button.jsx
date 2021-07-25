@@ -1,6 +1,7 @@
 import { computed, toRefs } from 'vue'
+import { prefix, prefixLowerCase } from '~/utils/config/prefix'
 export default {
-    name: 'AimerButton',
+    name: `${prefix}Button`,
     props: {
         type: {
             type: String,
@@ -26,7 +27,7 @@ export default {
     setup(props, { slots, attrs, emit }) {
         const classes = computed(() => {
             const { type,loading } = toRefs(props)
-            const defaultAimerBtnClass = `aimer-btn`
+            const defaultAimerBtnClass = `${prefixLowerCase}-btn`
             return {
                 [defaultAimerBtnClass]: true,
                 [`${defaultAimerBtnClass}-${type.value}`]: type.value,

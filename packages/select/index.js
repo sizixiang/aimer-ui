@@ -1,5 +1,5 @@
-import AimerSelect from './src/select'
-AimerSelect.install = Vue => {
-    Vue.component(AimerSelect.name,AimerSelect)
+import Select from './src/select'
+Select.install = Vue => {
+    Vue.component(Select.name,Select)
 }
-export default AimerSelect
+export default Select

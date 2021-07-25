@@ -1,5 +1,5 @@
-import AimerButton from './src/button'
-AimerButton.install = Vue => {
-    Vue.component(AimerButton.name,AimerButton)
+import Button from './src/button'
+Button.install = Vue => {
+    Vue.component(Button.name,Button)
 }
-export default AimerButton
+export default Button
