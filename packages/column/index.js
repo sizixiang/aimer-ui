@@ -1,5 +1,5 @@
-import AimerCol from './src/column'
-AimerCol.install = Vue => {
-    Vue.component(AimerCol.name,AimerCol)
+import Col from './src/column'
+Col.install = Vue => {
+    Vue.component(Col.name, Col)
 }
-export default AimerCol
+export default Col

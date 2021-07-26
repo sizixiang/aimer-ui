@@ -1,15 +1,17 @@
 
 import { toRefs, computed, provide, ref } from 'vue'
 import { isSymbol, generatingRandom } from '../../utils/lib'
+import { prefix, prefixLowerCase } from '../../utils/config/prefix'
 
 export default {
-  name: 'AimerForm',
+  name: prefix + 'Form',
   props: {
     class: {
       type: String,
       default: ''
     },
     // major key
+    // 主键
     id: {
       type: String,
       default: ''
@@ -83,7 +85,7 @@ export default {
     })
     provide('aimerFormAttr', attribute.value)
     return() => (
-      <div key={`${id.value}From`} class={`aimer-form ${className.value}`}>
+      <div key={`${id.value}From`} class={`${prefixLowerCase}-form ${className.value}`}>
         {template.value}
       </div>
     )
@@ -91,15 +93,20 @@ export default {
 }
 
 // If both exist, As a data first render
+// 如果两个都存在的话, 以data做为模板, 先渲染
 // Each data, If slot there are params.linkLabel, This slot is inserted after the data loop
+// 循环data数据的时候, 如果插槽上存在参数linkLabel, 检测到循环data的label一致的加入到后面把这个插槽数据
 const bothTemplate = (vNode, data) => {
   let template = []
   let vNodeLen = vNode.length
   let dataLen = data.length
   // Preventing annotations is also considered a combination of the two, by determining whether Symbol is commented or not
+  // 插槽循环通过判断类型是否为symbol来判断是否已经被注释了, 防止在循环的时候, 把注释也添加进去
   // find slots params.linkLabel
+  // 找到所有插槽是否有参数linkLabel
   const hashMap = {}
   // Unordered slots
+  // 没有参数linkLabel的插槽数据
   const disorderly = []
   for (let i = 0; i < vNodeLen; i++) {
     if (!isSymbol(vNode[i].type)) {
@@ -117,6 +124,7 @@ const bothTemplate = (vNode, data) => {
     if (hashMap[label]) {
       template.push( createElement({ label, key: generatingRandom()[0], col, ...props, }) )
       // Prevent too many props to be set
+      // 防止在标签上出现过多的属性
       delete hashMap[label].props.linkLabel
       hashMap[label].key = `form-item-${generatingRandom()[0]}`
       template.push(hashMap[label])

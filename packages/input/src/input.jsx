@@ -1,7 +1,8 @@
 import { computed, toRefs, ref, watchEffect } from 'vue'
+import { prefix, prefixLowerCase } from '../../utils/config/prefix'
 // import { indexOf } from '../../utils/lib'
 export default {
-  name: 'AimerInput',
+  name: prefix + 'Input',
   props: {
     // Base type, Input the following properties will apply
     type: {
@@ -52,7 +53,7 @@ export default {
     },
     prefixIcon: String,
     suffixIcon: String,
-    modelValue: String
+    modelValue: [String, Number]
   },
   setup(prop, ctx) {
     console.log('attr: ', ctx);
@@ -60,6 +61,7 @@ export default {
     const showPasswordFlag = ref(false)
     const prefix = ref('')
     const suffix = ref('')
+    const triggerClass = ref('')
     const attributeInput = computed(() => {
       const { type, value, maxLength, minLength, readonly, disabled } = toRefs(prop)
       // prefixIcon, suffixIcon, size
@@ -76,7 +78,9 @@ export default {
         maxLength: maxLength.value,
         minLength: minLength.value,
         ...attributeObj.value,
-        onkeyup: (e) => handlerChange(e)
+        onkeyup: (e) => handlerChange(e),
+        onfocus: () => triggerFocus('is-focus'),
+        onblur: () => triggerBlur('')
       }
     })
 
@@ -84,7 +88,7 @@ export default {
       const { type, readonly, disabled, size } = toRefs(prop)
       const className = ref([])
       if (type.value !== 'textarea' && size.value !== 'large') {
-        className.value.push(`aimer-input-${size.value}`)
+        className.value.push(`${prefixLowerCase}-input-${size.value}`)
       }
       if (disabled.value) {
         className.value.push('is-disabled')
@@ -96,6 +100,11 @@ export default {
       }
     })
 
+    // 输入框触发焦点事件
+    const triggerFocus = (className) => { triggerClass.value = className }
+    const triggerBlur = () => { triggerClass.value = '' }
+
+    //
     const handlerChange = (event) => {
       attributeInput.value.value = event.target.value
     }
@@ -120,23 +129,22 @@ export default {
 
     return() => (
       <div
-        class={`aimer-input`}
+        class={`${prefixLowerCase}-input`}
         {...attributeDiv.value}
       >
         {
           prefix.value
-          ? <span class="aimer-input-icon aimer-input-icon_prefix"><aimer-icon name={prefix.value}/></span>
+          ? <span class={`${prefixLowerCase}-input-icon ${prefixLowerCase}-input-icon_prefix`}><aimer-icon name={prefix.value}/></span>
           : ''
         }
         <input
-          class={`aimer-input_inner`}
+          class={`${prefixLowerCase}-input_inner ${triggerClass.value}`}
           {...attributeInput.value}
-          class={''}
         />
         {
           suffix.value
           ? <span
-              class={`aimer-input-icon aimer-input-icon_suffix`}
+              class={`${prefixLowerCase}-input-icon ${prefixLowerCase}-input-icon_suffix`}
             >
               <aimer-icon
                 name={suffix.value}

@@ -1,7 +1,8 @@
 import { toRefs, computed, ref, inject, provide } from 'vue'
+import { prefix, prefixLowerCase } from '../../utils/config/prefix'
 // import { indexOf } from '../../utils/lib'
 export default {
-  name: 'AimerFormItem',
+  name: prefix + 'FormItem',
   provide: {
     'aimerFormItem': this
   },
@@ -33,11 +34,11 @@ export default {
   },
   render() {
     return (
-      <div class="aimer-form-item clearfix">
-        <label style={this.style} class="aimer-form-item-label">
+      <div class={`${prefixLowerCase}-form-item clearfix`}>
+        <label style={this.style} class={`${prefixLowerCase}-form-item-label`}>
           {this.label}
         </label>
-        <div class="aimer-form-item_control" style={this.controlStyle}>
+        <div class={`${prefixLowerCase}-form-item_control`} style={this.controlStyle}>
           {
             this.$slots.default
             ? this.$slots.default()

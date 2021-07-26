@@ -1,5 +1,5 @@
-import AimerFormItem from './src/formItem'
-AimerFormItem.install = Vue => {
-    Vue.component(AimerFormItem.name,AimerFormItem)
+import FormItem from './src/formItem'
+FormItem.install = Vue => {
+    Vue.component(FormItem.name,FormItem)
 }
-export default AimerFormItem
+export default FormItem
